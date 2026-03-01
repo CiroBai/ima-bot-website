@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>飞书配置指南 - IMA Bot</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/lobster-icon.png">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="images/lobster-icon.png" alt="IMA Bot" class="logo-img">
+                <span class="logo-text">IMA Bot</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="pricing.html">定价</a></li>
+                <li><a href="adopt.html">创建 Bot</a></li>
+                <li><a href="docs.html">帮助</a></li>
+                <li><a href="feishu-config.html" class="active">飞书配置</a></li>
+                <li><a href="https://www.imastudio.com/" target="_blank">支持</a></li>
+            </ul>
+            <button class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="feishu-hero">
+        <div class="container">
+            <h1>飞书配置指南</h1>
+            <p>将你的 IMA Bot 连接飞书/Lark，随时随地开始创作</p>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <section class="feishu-content">
+        <div class="container">
+            <!-- 方法一：企业微信授权 -->
+            <div class="config-section">
+                <div class="section-header">
+                    <span class="method-tag">方法一</span>
+                    <h2>企业微信授权（推荐）</h2>
+                </div>
+                <p class="section-desc">如果你所在的企业使用企业微信，可以通过授权方式快速连接飞书。</p>
+                
+                <div class="steps">
+                    <div class="step-item">
+                        <span class="step-num">1</span>
+                        <div class="step-content">
+                            <h3>进入 Bot 设置</h3>
+                            <p>在 IMA Bot 控制台中，进入"渠道配置"页面，找到"飞书/Lark"选项。</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-num">2</span>
+                        <div class="step-content">
+                            <h3>选择"企业微信授权"</h3>
+                            <p>点击"通过企业微信授权"按钮。</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-num">3</span>
+                        <div class="step-content">
+                            <h3>扫码授权</h3>
+                            <p>使用企业微信管理员账号扫码，完成授权验证。</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-num">4</span>
+                        <div class="step-content">
+                            <h3>配置使用权限</h3>
+                            <p>设置哪些用户可以使用 Bot，保存配置后即可开始使用。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <span class="tip-icon">💡</span>
+                    <strong>注意事项</strong>
+                    <ul>
+                        <li>需要企业微信管理员权限才能完成授权</li>
+                        <li>授权后，所有企业成员均可使用 Bot</li>
+                        <li>如需限制使用范围，可在企业微信后台配置</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 方法二：自建应用 -->
+            <div class="config-section">
+                <div class="section-header">
+                    <span class="method-tag">方法二</span>
+                    <h2>自建应用接入</h2>
+                </div>
+                <p class="section-desc">如果你想更灵活地控制 Bot，可以使用自建应用的方式接入飞书。</p>
+                
+                <div class="steps">
+                    <div class="step-item">
+                        <span class="step-num">1</span>
+                        <div class="step-content">
+                            <h3>创建飞书自建应用</h3>
+                            <p>打开 <a href="https://open.feishu.cn/" target="_blank">飞书开放平台</a>，使用企业账号登录，点击"创建应用"。</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-num">2</span>
+                        <div class="step-content">
+                            <h3>配置应用权限</h3>
+                            <p>在应用的"权限管理"中，添加以下权限：</p>
+                            <ul class="permission-list">
+                                <li>im:chat:readonly - 读取群会话</li>
+                                <li>im:chat:message:readonly - 读取消息</li>
+                                <li>im:chat:message:send_as_bot - 以 Bot 身份发消息</li>
+                                <li>im:resource:upload - 上传文件</li>
+                                <li>im:resource:download - 下载文件</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-num">3</span>
+                        <div class="step-content">
+                            <h3>创建 Bot</h3>
+                            <p>在应用页面添加 Bot 能力，设置 Bot 名称和头像。</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-num">4</span>
+                        <div class="step-content">
+                            <h3>发布应用</h3>
+                            <p>完成开发测试后，提交发布申请。审批通过后，企业成员即可在群聊中添加 Bot。</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-num">5</span>
+                        <div class="step-content">
+                            <h3>在 IMA Bot 配置</h3>
+                            <p>回到 IMA Bot 控制台，输入飞书应用的 App ID 和 App Secret，完成连接配置。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 常见问题 -->
+            <div class="config-section faq">
+                <h2>❓ 常见问题</h2>
+                
+                <div class="faq-item">
+                    <h3>Q: 连接飞书后，Bot 没有响应怎么办？</h3>
+                    <p>A: 请检查以下设置：</p>
+                    <ul>
+                        <li>确认已在飞书开放平台正确配置了事件订阅地址</li>
+                        <li>检查 Bot 是否已被添加到群聊中</li>
+                        <li>确认事件订阅的权限已开通</li>
+                    </ul>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Q: 如何让 Bot 在私聊中也能响应？</h3>
+                    <p>A: 在飞书应用配置中，需要给应用添加"im:chat:private:message:send_as_bot"权限，并在应用发布时勾选"支持私聊"。</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Q: 飞书版本有什么要求？</h3>
+                    <p>A: 需要企业版或专业版飞书，免费版可能无法使用部分功能。建议使用企业微信方式接入。</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Q: 如何在群聊中@ Bot？</h3>
+                    <p>A: 在群聊中输入 @Bot名称 加上你的问题，Bot 就会自动回复。也可以直接发送消息，Bot 会根据上下文智能响应。</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Q: 发送文件给 Bot 没有反应？</h3>
+                    <p>A: 目前支持图片、文档等常见文件格式。请确保文件大小在 20MB 以内，暂不支持压缩包等特殊格式。</p>
+                </div>
+            </div>
+
+            <!-- 下一步 -->
+            <div class="next-step">
+                <h2>下一步</h2>
+                <p>配置完成后，你可以：</p>
+                <div class="next-links">
+                    <a href="docs.html" class="btn btn-secondary">查看完整使用文档 →</a>
+                    <a href="adopt.html" class="btn btn-primary">创建你的 Bot →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/lobster-icon.png" alt="IMA Bot" width="32">
+                    <span>IMA Bot</span>
+                    <p>基于 IMA Studio 的智能创作助手</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">首页</a>
+                    <a href="pricing.html">定价</a>
+                    <a href="adopt.html">创建 Bot</a>
+                    <a href="docs.html">帮助</a>
+                    <a href="feishu-config.html">飞书配置</a>
+                    <a href="https://www.imastudio.com/" target="_blank">支持</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 IMA Studio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

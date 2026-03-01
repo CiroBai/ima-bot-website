@@ -521,6 +521,332 @@ h1, h2, h3, h4, h5, h6 {
 .footer-links {
     display: flex;
     gap: 2rem;
+    flex-wrap: wrap;
+}
+
+/* Docs Page */
+.docs-hero {
+    padding: 8rem 0 3rem;
+    background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%);
+    text-align: center;
+}
+
+.docs-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.docs-hero p {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+}
+
+.docs-content {
+    padding: 3rem 0;
+    background: white;
+}
+
+.docs-section {
+    margin-bottom: 3rem;
+}
+
+.docs-section .step-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.docs-section .step-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: var(--gradient);
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+}
+
+.docs-section h2 {
+    font-size: 1.5rem;
+}
+
+.step-card {
+    background: var(--light);
+    padding: 1.5rem;
+    border-radius: var(--radius-xl);
+    margin-bottom: 1rem;
+}
+
+.step-card h3 {
+    font-size: 1.125rem;
+    margin-bottom: 0.75rem;
+}
+
+.step-card ul {
+    list-style: disc;
+    margin-left: 1.5rem;
+}
+
+.step-card li {
+    padding: 0.25rem 0;
+    color: var(--text-secondary);
+}
+
+.tip-box {
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    margin-top: 1rem;
+}
+
+.tip-box strong {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #92400e;
+}
+
+.tip-box p {
+    color: #78350f;
+    font-size: 0.875rem;
+}
+
+.tip-box ul {
+    color: #78350f;
+    font-size: 0.875rem;
+    margin-left: 1rem;
+}
+
+.platforms-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.platform-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background: white;
+    padding: 1rem;
+    border-radius: var(--radius-lg);
+}
+
+.platform-item .platform-icon {
+    font-size: 2rem;
+}
+
+.platform-item h4 {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.platform-item p {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.example-box {
+    background: white;
+    padding: 1rem;
+    border-radius: var(--radius-lg);
+    border-left: 4px solid var(--primary);
+    margin-top: 1rem;
+}
+
+.example-box p {
+    padding: 0.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.docs-section.final {
+    background: var(--dark);
+    color: white;
+    padding: 3rem;
+    border-radius: var(--radius-2xl);
+    text-align: center;
+}
+
+.docs-section.final h2 {
+    margin-bottom: 1.5rem;
+}
+
+.docs-section.final p {
+    font-size: 1.125rem;
+    opacity: 0.9;
+}
+
+.final-list {
+    text-align: left;
+    max-width: 600px;
+    margin: 2rem auto;
+}
+
+.final-list li {
+    padding: 0.75rem 0;
+    font-size: 1rem;
+}
+
+/* Feishu Config Page */
+.feishu-hero {
+    padding: 8rem 0 3rem;
+    background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%);
+    text-align: center;
+}
+
+.feishu-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.feishu-hero p {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+}
+
+.feishu-content {
+    padding: 3rem 0;
+    background: var(--light);
+}
+
+.config-section {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--radius-2xl);
+    margin-bottom: 2rem;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.method-tag {
+    background: var(--primary);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.section-header h2 {
+    font-size: 1.5rem;
+}
+
+.section-desc {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.step-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--light);
+    border-radius: var(--radius-lg);
+}
+
+.step-item .step-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background: var(--gradient);
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.step-content h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.step-content p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.step-content a {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+.permission-list {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.config-section.faq h2 {
+    margin-bottom: 1.5rem;
+}
+
+.faq-item {
+    background: var(--light);
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    margin-bottom: 1rem;
+}
+
+.faq-item h3 {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.faq-item p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.faq-item ul {
+    margin-left: 1.5rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.next-step {
+    background: var(--gradient);
+    padding: 2rem;
+    border-radius: var(--radius-2xl);
+    text-align: center;
+    color: white;
+}
+
+.next-step h2 {
+    margin-bottom: 1rem;
+}
+
+.next-step p {
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+}
+
+.next-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.next-links .btn-secondary {
+    background: white;
 }
 
 .footer-links a {
