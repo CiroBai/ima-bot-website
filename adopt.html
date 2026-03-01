@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创建 Bot - IMA Bot</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/lobster-icon.png">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="images/lobster-icon.png" alt="IMA Bot" class="logo-img">
+                <span class="logo-text">IMA Bot</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="pricing.html">定价</a></li>
+                <li><a href="adopt.html" class="active">创建 Bot</a></li>
+                <li><a href="index.html#features">功能</a></li>
+                <li><a href="index.html#scenarios">场景</a></li>
+            </ul>
+            <button class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Create Hero -->
+    <section class="create-hero">
+        <div class="container">
+            <h1>创建你的<span class="gradient-text">专属 Bot</span></h1>
+            <p>选择模型和工具箱，一键创建你的智能创作助手</p>
+        </div>
+    </section>
+
+    <!-- Create Form -->
+    <section class="create-section">
+        <div class="container">
+            <div class="create-wizard">
+                <!-- Step 1: Subscription Check -->
+                <div class="wizard-step" id="step-1">
+                    <div class="step-header">
+                        <span class="step-number">1</span>
+                        <h3>检查订阅状态</h3>
+                    </div>
+                    <div class="step-content">
+                        <p>请确认你的订阅等级，以创建对应级别的 Bot</p>
+                        <div class="subscription-check">
+                            <div class="current-sub">
+                                <span class="label">当前订阅：</span>
+                                <span class="value" id="current-subscription">免费版</span>
+                                <a href="pricing.html" class="btn btn-small">查看套餐</a>
+                            </div>
+                            <div class="bot-ability">
+                                <span class="label">Bot 能力：</span>
+                                <span class="value" id="bot-ability">❌ 不可创建</span>
+                            </div>
+                        </div>
+                        <div class="step-actions">
+                            <button class="btn btn-primary" id="btn-check-subscription" onclick="checkSubscription()">
+                                检查订阅
+                            </button>
+                            <button class="btn btn-secondary" id="btn-go-pricing" style="display:none" onclick="window.location.href='pricing.html'">
+                                订阅 Pro/Ultra
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Bot Settings -->
+                <div class="wizard-step" id="step-2" style="display:none">
+                    <div class="step-header">
+                        <span class="step-number">2</span>
+                        <h3>设置你的 Bot</h3>
+                    </div>
+                    <div class="step-content">
+                        <!-- Model Selection -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                <span class="label-icon">🧠</span>
+                                选择大模型
+                                <span class="label-hint">（根据你的订阅级别）</span>
+                            </label>
+                            <div class="model-options" id="model-options">
+                                <label class="model-option">
+                                    <input type="radio" name="model" value="kimi" checked>
+                                    <div class="model-card">
+                                        <span class="model-icon">🌙</span>
+                                        <span class="model-name">Kimi</span>
+                                        <span class="model-desc">长上下文，中英文均衡</span>
+                                    </div>
+                                </label>
+                                <label class="model-option">
+                                    <input type="radio" name="model" value="minimax">
+                                    <div class="model-card">
+                                        <span class="model-icon">🔵</span>
+                                        <span class="model-name">MiniMax</span>
+                                        <span class="model-desc">超长上下文</span>
+                                    </div>
+                                </label>
+                                <label class="model-option disabled" id="claude-option">
+                                    <input type="radio" name="model" value="claude" disabled>
+                                    <div class="model-card">
+                                        <span class="model-icon">🟠</span>
+                                        <span class="model-name">Claude</span>
+                                        <span class="model-desc">深度推理（Ultra 专享）</span>
+                                        <span class="model-lock">🔒 Ultra</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Skill Toolbox Selection -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                <span class="label-icon">🧩</span>
+                                选择 Skill 工具箱
+                            </label>
+                            <div class="skill-options">
+                                <label class="skill-option">
+                                    <input type="checkbox" name="skill" value="image" checked>
+                                    <div class="skill-card">
+                                        <span class="skill-icon">🎨</span>
+                                        <span class="skill-name">图片生成</span>
+                                        <span class="skill-desc">文生图、图生图、编辑</span>
+                                        <span class="skill-cost">成本：M</span>
+                                    </div>
+                                </label>
+                                <label class="skill-option">
+                                    <input type="checkbox" name="skill" value="video" checked>
+                                    <div class="skill-card">
+                                        <span class="skill-icon">🎬</span>
+                                        <span class="skill-name">视频制作</span>
+                                        <span class="skill-desc">字幕、转写、生成</span>
+                                        <span class="skill-cost">成本：L</span>
+                                    </div>
+                                </label>
+                                <label class="skill-option">
+                                    <input type="checkbox" name="skill" value="audio" checked>
+                                    <div class="skill-card">
+                                        <span class="skill-icon">🎵</span>
+                                        <span class="skill-name">音频创作</span>
+                                        <span class="skill-desc">ASR、TTS、音乐</span>
+                                        <span class="skill-cost">成本：M</span>
+                                    </div>
+                                </label>
+                                <label class="skill-option disabled" id="browser-skill-option">
+                                    <input type="checkbox" name="skill" value="browser" disabled>
+                                    <div class="skill-card">
+                                        <span class="skill-icon">🌐</span>
+                                        <span class="skill-name">浏览器工具</span>
+                                        <span class="skill-desc">网页抓取、自动操作</span>
+                                        <span class="skill-cost">成本：M/L</span>
+                                        <span class="skill-lock">🔒 Ultra</span>
+                                    </div>
+                                </label>
+                                <label class="skill-option disabled" id="website-skill-option">
+                                    <input type="checkbox" name="skill" value="website" disabled>
+                                    <div class="skill-card">
+                                        <span class="skill-icon">🖥️</span>
+                                        <span class="skill-name">建站工具</span>
+                                        <span class="skill-desc">页面生成、部署、SEO</span>
+                                        <span class="skill-cost">成本：M</span>
+                                        <span class="skill-lock">🔒 Ultra</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Platform Selection -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                <span class="label-icon">📱</span>
+                                连接平台
+                            </label>
+                            <div class="platform-options">
+                                <label class="platform-option">
+                                    <input type="checkbox" name="platform" value="whatsapp">
+                                    <div class="platform-card">
+                                        <span class="platform-icon">💬</span>
+                                        <span class="platform-name">WhatsApp</span>
+                                    </div>
+                                </label>
+                                <label class="platform-option">
+                                    <input type="checkbox" name="platform" value="telegram">
+                                    <div class="platform-card">
+                                        <span class="platform-icon">✈️</span>
+                                        <span class="platform-name">Telegram</span>
+                                    </div>
+                                </label>
+                                <label class="platform-option">
+                                    <input type="checkbox" name="platform" value="discord">
+                                    <div class="platform-card">
+                                        <span class="platform-icon">🎮</span>
+                                        <span class="platform-name">Discord</span>
+                                    </div>
+                                </label>
+                                <label class="platform-option">
+                                    <input type="checkbox" name="platform" value="feishu">
+                                    <div class="platform-card">
+                                        <span class="platform-icon">📘</span>
+                                        <span class="platform-name">飞书</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="step-actions">
+                            <button class="btn btn-primary" onclick="createBot()">
+                                创建我的 Bot
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Success -->
+                <div class="wizard-step" id="step-3" style="display:none">
+                    <div class="step-header">
+                        <span class="step-number">🎉</span>
+                        <h3>创建成功！</h3>
+                    </div>
+                    <div class="step-content success-content">
+                        <img src="images/lobster-icon.png" alt="Success" class="success-icon" style="width:80px">
+                        <h4>你的 Bot 已经准备就绪！</h4>
+                        <div class="bot-summary">
+                            <div class="summary-item">
+                                <span class="summary-label">大模型：</span>
+                                <span class="summary-value" id="summary-model">Kimi</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">工具箱：</span>
+                                <span class="summary-value" id="summary-skills">图片 + 视频 + 音频</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">平台：</span>
+                                <span class="summary-value" id="summary-platforms">-</span>
+                            </div>
+                        </div>
+                        <div class="success-actions">
+                            <button class="btn btn-primary" onclick="startChat()">
+                                💬 开始对话
+                            </button>
+                            <button class="btn btn-secondary" onclick="configurePlatform()">
+                                ⚙️ 配置平台
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Cards -->
+    <section class="info-section">
+        <div class="container">
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">💰</div>
+                    <h4>积分消耗</h4>
+                    <p>每次运行前会显示预计消耗区间，设置单次上限，余额不足自动降级</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🛡️</div>
+                    <h4>安全可靠</h4>
+                    <p>写操作二次确认，域名白名单，敏感数据加密存储</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔄</div>
+                    <h4>随时可改</h4>
+                    <p>模型和工具箱随时可切换，订阅降级后功能自动调整</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/lobster-icon.png" alt="IMA Bot" class="logo-img">
+                    <span>IMA Bot</span>
+                    <p>基于 IMA Studio 的智能创作助手</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">首页</a>
+                    <a href="pricing.html">定价</a>
+                    <a href="adopt.html">创建 Bot</a>
+                    <a href="#">文档</a>
+                    <a href="#">支持</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 IMA Studio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/create.js"></script>
+</body>
+</html>
