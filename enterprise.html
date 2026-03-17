@@ -1,381 +1,1328 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMA Studio for Enterprise — AI Video & Image API for Business</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Ima Sevio 1.0 — AI 视频生成 API 企业服务 | Ima Studio</title>
+    <meta name="description" content="Ima Studio 企业级 AI 视频生成 API，影视级画质，企业专属通道，支持文生视频、图生视频，灵活套餐按需计费。">
     <link rel="icon" href="images/lobster-icon.png">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --primary: #6C63FF;
-            --primary-dark: #5A52D5;
-            --bg: #0A0A0F;
-            --bg2: #12121A;
-            --bg3: #1A1A26;
-            --text: #F0F0FF;
-            --text2: #A0A0C0;
-            --border: rgba(108,99,255,0.2);
-            --grad: linear-gradient(135deg, #6C63FF, #9C59FF);
-        }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+<style>
+/* ===== ToB Landing Page Styles ===== */
+:root {
+    /* Brand Colors */
+    --brand-primary: #4F6EF7;
+    --brand-primary-dark: #3451d1;
+    --brand-accent: #7B5CF6;
+    --brand-glow: rgba(79, 110, 247, 0.3);
 
-        /* NAV */
-        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(10,10,15,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
-        .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
-        .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-        .nav-logo img { width: 32px; height: 32px; }
-        .nav-logo span { font-size: 18px; font-weight: 700; color: var(--text); }
-        .nav-links { display: flex; gap: 32px; list-style: none; }
-        .nav-links a { color: var(--text2); text-decoration: none; font-size: 14px; transition: color 0.2s; }
-        .nav-links a:hover { color: var(--text); }
-        .nav-cta { background: var(--grad); color: #fff; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 600; transition: opacity 0.2s; }
-        .nav-cta:hover { opacity: 0.85; }
+    /* Dark Theme */
+    --bg-base: #0a0c14;
+    --bg-card: #10131f;
+    --bg-card-hover: #161929;
+    --bg-section: #0d0f1c;
+    --border-color: rgba(79, 110, 247, 0.2);
+    --border-subtle: rgba(255, 255, 255, 0.08);
 
-        /* HERO */
-        .hero { padding: 140px 24px 80px; text-align: center; max-width: 900px; margin: 0 auto; }
-        .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(108,99,255,0.15); border: 1px solid var(--border); border-radius: 100px; padding: 6px 16px; font-size: 13px; color: #9C8FFF; margin-bottom: 24px; }
-        .hero h1 { font-size: clamp(36px, 6vw, 64px); font-weight: 800; line-height: 1.15; margin-bottom: 24px; }
-        .hero h1 span { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { font-size: 18px; color: var(--text2); max-width: 600px; margin: 0 auto 40px; }
-        .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-        .btn-primary { background: var(--grad); color: #fff; padding: 14px 32px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 16px; transition: opacity 0.2s; }
-        .btn-primary:hover { opacity: 0.85; }
-        .btn-secondary { background: transparent; color: var(--text); padding: 14px 32px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 16px; border: 1px solid var(--border); transition: border-color 0.2s; }
-        .btn-secondary:hover { border-color: var(--primary); }
+    /* Text */
+    --text-primary: #f0f4ff;
+    --text-secondary: #8b97c6;
+    --text-muted: #555e80;
 
-        /* STATS */
-        .stats { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 48px 24px; }
-        .stats-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 40px; text-align: center; }
-        .stat-num { font-size: 40px; font-weight: 800; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .stat-label { color: var(--text2); font-size: 14px; margin-top: 4px; }
+    /* Spacing */
+    --section-py: 96px;
+    --container-max: 1200px;
+    --container-px: 24px;
 
-        /* SECTION */
-        section { padding: 80px 24px; }
-        .section-inner { max-width: 1200px; margin: 0 auto; }
-        .section-tag { font-size: 13px; font-weight: 600; color: var(--primary); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
-        .section-title { font-size: clamp(28px, 4vw, 42px); font-weight: 800; margin-bottom: 16px; }
-        .section-desc { font-size: 16px; color: var(--text2); max-width: 560px; }
+    /* Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+}
 
-        /* MODELS */
-        .models-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 48px; }
-        .model-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 28px; transition: border-color 0.2s, transform 0.2s; }
-        .model-card:hover { border-color: var(--primary); transform: translateY(-4px); }
-        .model-icon { width: 48px; height: 48px; background: rgba(108,99,255,0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px; }
-        .model-name { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-        .model-tag { display: inline-block; background: rgba(108,99,255,0.15); color: #9C8FFF; font-size: 11px; padding: 3px 10px; border-radius: 100px; margin-bottom: 12px; }
-        .model-desc { color: var(--text2); font-size: 14px; line-height: 1.6; }
+/* ===== Reset ===== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        /* USE CASES */
-        .cases { background: var(--bg2); }
-        .cases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 48px; }
-        .case-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
-        .case-header { padding: 24px; border-bottom: 1px solid var(--border); }
-        .case-icon { font-size: 32px; margin-bottom: 12px; }
-        .case-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-        .case-desc { color: var(--text2); font-size: 14px; }
-        .case-features { padding: 20px 24px; display: flex; flex-direction: column; gap: 10px; }
-        .case-feat { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text2); }
-        .case-feat i { color: var(--primary); font-size: 12px; }
+html {
+    scroll-behavior: smooth;
+}
 
-        /* ACCESS */
-        .access-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 32px; margin-top: 48px; }
-        .access-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 20px; padding: 36px; }
-        .access-card.featured { border-color: var(--primary); background: linear-gradient(135deg, rgba(108,99,255,0.1), rgba(156,89,255,0.05)); }
-        .access-label { font-size: 13px; font-weight: 600; color: var(--primary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
-        .access-title { font-size: 24px; font-weight: 800; margin-bottom: 12px; }
-        .access-desc { color: var(--text2); font-size: 15px; margin-bottom: 24px; }
-        .access-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
-        .access-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: var(--text2); }
-        .access-list li i { color: #4CAF50; margin-top: 3px; flex-shrink: 0; }
-        .code-block { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; font-family: 'Fira Code', monospace; font-size: 12px; color: #9C8FFF; overflow-x: auto; margin-top: 16px; }
+body {
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+    background: var(--bg-base);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
 
-        /* PRICING */
-        .pricing { background: var(--bg2); }
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 48px; }
-        .price-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 14px; padding: 24px; text-align: center; }
-        .price-model { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
-        .price-amount { font-size: 28px; font-weight: 800; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .price-unit { font-size: 12px; color: var(--text2); margin-top: 4px; }
-        .price-note { font-size: 12px; color: var(--text2); margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+/* ===== Layout ===== */
+.tob-container {
+    width: min(var(--container-max), 100% - var(--container-px) * 2);
+    margin-inline: auto;
+}
 
-        /* CONTACT */
-        .contact-box { background: linear-gradient(135deg, rgba(108,99,255,0.15), rgba(156,89,255,0.08)); border: 1px solid var(--border); border-radius: 24px; padding: 64px 48px; text-align: center; max-width: 700px; margin: 0 auto; }
-        .contact-box h2 { font-size: 36px; font-weight: 800; margin-bottom: 16px; }
-        .contact-box p { color: var(--text2); font-size: 16px; margin-bottom: 32px; }
-        .contact-methods { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-        .contact-btn { display: flex; align-items: center; gap: 10px; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 15px; transition: opacity 0.2s; }
-        .contact-btn:hover { opacity: 0.85; }
-        .contact-btn.email { background: var(--grad); color: #fff; }
-        .contact-btn.website { background: var(--bg2); color: var(--text); border: 1px solid var(--border); }
+/* ===== Nav ===== */
+.tob-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 0 var(--container-px);
+    height: 64px;
+    display: flex;
+    align-items: center;
+    background: rgba(10, 12, 20, 0.8);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-subtle);
+}
 
-        /* FOOTER */
-        footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; color: var(--text2); font-size: 13px; }
+.tob-nav__inner {
+    width: min(var(--container-max), 100%);
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero { padding: 100px 24px 60px; }
-            .contact-box { padding: 40px 24px; }
-        }
-    </style>
+.tob-nav__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.tob-nav__logo-img {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    background: #fff;
+    padding: 2px;
+    display: block;
+}
+
+.tob-nav__logo-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+}
+
+.tob-nav__links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+}
+
+.tob-nav__links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.tob-nav__links a:hover {
+    color: var(--text-primary);
+}
+
+.tob-nav__cta {
+    background: var(--brand-primary);
+    color: #fff !important;
+    padding: 8px 20px;
+    border-radius: var(--radius-md);
+    font-weight: 600 !important;
+    transition: background 0.2s, transform 0.1s !important;
+}
+
+.tob-nav__cta:hover {
+    background: var(--brand-primary-dark) !important;
+    transform: translateY(-1px);
+}
+
+.tob-nav__mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+    padding: 4px;
+}
+
+/* ===== Hero ===== */
+.tob-hero {
+    padding-top: 160px;
+    padding-bottom: var(--section-py);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.tob-hero__bg {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(79, 110, 247, 0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 50%, rgba(123, 92, 246, 0.08) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.tob-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(79, 110, 247, 0.1);
+    border: 1px solid rgba(79, 110, 247, 0.3);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 13px;
+    color: #8ba4ff;
+    font-weight: 500;
+    margin-bottom: 28px;
+}
+
+.tob-hero__badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #4F6EF7;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.tob-hero__title {
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+}
+
+.tob-hero__title span {
+    background: linear-gradient(135deg, #7B9FFF 0%, #A78BFA 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.tob-hero__subtitle {
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+}
+
+.tob-hero__actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 64px;
+}
+
+.tob-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.tob-btn--primary {
+    background: var(--brand-primary);
+    color: #fff;
+    box-shadow: 0 4px 20px var(--brand-glow);
+}
+
+.tob-btn--primary:hover {
+    background: var(--brand-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px var(--brand-glow);
+}
+
+.tob-btn--outline {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+}
+
+.tob-btn--outline:hover {
+    border-color: var(--border-color);
+    background: rgba(79, 110, 247, 0.06);
+    transform: translateY(-2px);
+}
+
+.tob-hero__stats {
+    display: flex;
+    gap: 48px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.tob-hero__stat {
+    text-align: center;
+}
+
+.tob-hero__stat-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+}
+
+.tob-hero__stat-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* ===== Section Common ===== */
+.tob-section {
+    padding: var(--section-py) 0;
+}
+
+.tob-section--alt {
+    background: var(--bg-section);
+}
+
+.tob-section__header {
+    text-align: center;
+    margin-bottom: 56px;
+}
+
+.tob-section__eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--brand-primary);
+    margin-bottom: 12px;
+}
+
+.tob-section__title {
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.tob-section__desc {
+    font-size: 16px;
+    color: var(--text-secondary);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* ===== Capabilities ===== */
+.tob-caps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.tob-cap-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    transition: border-color 0.2s, background 0.2s, transform 0.2s;
+}
+
+.tob-cap-card:hover {
+    border-color: var(--border-color);
+    background: var(--bg-card-hover);
+    transform: translateY(-4px);
+}
+
+.tob-cap-card__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: rgba(79, 110, 247, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.tob-cap-card__title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.tob-cap-card__desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* ===== Use Cases ===== */
+.tob-cases {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.tob-case-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.tob-case-card:hover {
+    border-color: var(--border-color);
+    transform: translateY(-4px);
+}
+
+.tob-case-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--brand-primary), var(--brand-accent));
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.tob-case-card:hover::before {
+    opacity: 1;
+}
+
+.tob-case-card__tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(79, 110, 247, 0.1);
+    color: #8ba4ff;
+    margin-bottom: 16px;
+}
+
+.tob-case-card__title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.tob-case-card__desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+}
+
+/* ===== Usage Methods ===== */
+.tob-usage {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.tob-usage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xl);
+    padding: 36px;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.tob-usage-card:hover {
+    border-color: var(--border-color);
+    transform: translateY(-4px);
+}
+
+.tob-usage-card--featured {
+    border-color: rgba(79, 110, 247, 0.4);
+    background: linear-gradient(135deg, rgba(79, 110, 247, 0.06), rgba(123, 92, 246, 0.04));
+    position: relative;
+}
+
+.tob-usage-card__badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(79, 110, 247, 0.15);
+    color: #8ba4ff;
+    border: 1px solid rgba(79, 110, 247, 0.3);
+    margin-bottom: 20px;
+}
+
+.tob-usage-card__num {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--brand-primary);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.tob-usage-card__title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+    letter-spacing: -0.3px;
+}
+
+.tob-usage-card__desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 24px;
+}
+
+.tob-usage-card__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tob-usage-card__list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.tob-usage-card__list li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--brand-primary);
+    flex-shrink: 0;
+}
+
+/* ===== Pricing ===== */
+.tob-pricing {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    align-items: start;
+}
+
+.tob-plan {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xl);
+    padding: 36px;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.tob-plan:hover {
+    transform: translateY(-4px);
+}
+
+.tob-plan--featured {
+    border-color: var(--brand-primary);
+    background: linear-gradient(160deg, rgba(79, 110, 247, 0.08), var(--bg-card));
+    position: relative;
+}
+
+.tob-plan__popular {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, var(--brand-primary), var(--brand-accent));
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 16px;
+    border-radius: 100px;
+    white-space: nowrap;
+}
+
+.tob-plan__name {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.tob-plan__target {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+}
+
+.tob-plan__price {
+    margin-bottom: 8px;
+}
+
+.tob-plan__price-value {
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -1px;
+}
+
+.tob-plan__price-cny {
+    font-size: 16px;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-left: 4px;
+}
+
+.tob-plan__tokens {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.tob-plan__features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.tob-plan__features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.tob-plan__features li .check {
+    color: var(--brand-primary);
+    font-size: 15px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.tob-plan__cta {
+    width: 100%;
+    justify-content: center;
+}
+
+.tob-plan--featured .tob-plan__cta {
+    background: var(--brand-primary);
+    color: #fff;
+    box-shadow: 0 4px 20px var(--brand-glow);
+}
+
+/* ===== Advantages ===== */
+.tob-advantages {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.tob-adv {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    text-align: center;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.tob-adv:hover {
+    border-color: var(--border-color);
+    transform: translateY(-4px);
+}
+
+.tob-adv__icon {
+    font-size: 28px;
+    margin-bottom: 14px;
+}
+
+.tob-adv__title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.tob-adv__desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* ===== Process ===== */
+.tob-process {
+    display: flex;
+    gap: 0;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tob-step {
+    flex: 1;
+    min-width: 160px;
+    max-width: 200px;
+    text-align: center;
+    position: relative;
+    padding: 0 12px;
+}
+
+.tob-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 24px;
+    right: -8px;
+    width: 16px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--brand-primary), transparent);
+}
+
+.tob-step__num {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(79, 110, 247, 0.12);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--brand-primary);
+    margin: 0 auto 16px;
+}
+
+.tob-step__title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.tob-step__desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* ===== Contact ===== */
+.tob-contact {
+    background: linear-gradient(135deg, rgba(79, 110, 247, 0.1), rgba(123, 92, 246, 0.06));
+    border: 1px solid rgba(79, 110, 247, 0.2);
+    border-radius: var(--radius-xl);
+    padding: 64px 48px;
+    text-align: center;
+}
+
+.tob-contact__title {
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.tob-contact__desc {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 36px;
+    line-height: 1.7;
+}
+
+.tob-contact__links {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.tob-contact__link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.tob-contact__link:hover {
+    border-color: var(--border-color);
+    color: var(--text-primary);
+    background: rgba(79, 110, 247, 0.08);
+}
+
+/* ===== Footer ===== */
+.tob-footer {
+    border-top: 1px solid var(--border-subtle);
+    padding: 32px 0;
+    text-align: center;
+}
+
+.tob-footer__text {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.tob-footer__text a {
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+.tob-footer__text a:hover {
+    color: var(--text-primary);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    :root {
+        --section-py: 64px;
+        --container-px: 20px;
+    }
+
+    .tob-nav__links {
+        display: none;
+    }
+
+    .tob-nav__mobile-toggle {
+        display: flex;
+    }
+
+    .tob-hero {
+        padding-top: 120px;
+    }
+
+    .tob-hero__stats {
+        gap: 32px;
+    }
+
+    .tob-contact {
+        padding: 40px 24px;
+    }
+
+    .tob-process {
+        gap: 24px;
+    }
+
+    .tob-step:not(:last-child)::after {
+        display: none;
+    }
+}
+
+@media (max-width: 375px) {
+    .tob-hero__actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tob-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+</style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-    <div class="nav-inner">
-        <a href="index.html" class="nav-logo">
-            <img src="images/lobster-icon.png" alt="IMA Studio">
-            <span>IMA Studio</span>
-        </a>
-        <ul class="nav-links">
-            <li><a href="#models">Models</a></li>
-            <li><a href="#use-cases">Use Cases</a></li>
-            <li><a href="#access">API Access</a></li>
-            <li><a href="#pricing">Pricing</a></li>
-        </ul>
-        <a href="#contact" class="nav-cta">Contact Sales</a>
-    </div>
-</nav>
+    <!-- ===== Navigation ===== -->
+    <nav class="tob-nav" role="navigation" aria-label="主导航">
+        <div class="tob-nav__inner">
+            <a href="https://www.imastudio.com" class="tob-nav__logo" aria-label="Ima Studio 首页">
+                <img src="images/lobster-icon.png" width="32" height="32" alt="Ima Studio logo" class="tob-nav__logo-img">
+                <span class="tob-nav__logo-name">Ima Studio</span>
+            </a>
+            <ul class="tob-nav__links">
+                <li><a href="#capabilities">产品能力</a></li>
+                <li><a href="#usage">接入方式</a></li>
+                <li><a href="#pricing">套餐定价</a></li>
+                <li><a href="#process">合作流程</a></li>
+                <li><a href="#contact" class="tob-nav__cta">联系我们</a></li>
+            </ul>
+            <button class="tob-nav__mobile-toggle" aria-label="菜单" aria-expanded="false">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <rect y="4" width="20" height="2" rx="1"/>
+                    <rect y="9" width="20" height="2" rx="1"/>
+                    <rect y="14" width="20" height="2" rx="1"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
 
-<!-- HERO -->
-<div class="hero">
-    <div class="hero-badge">
-        <i class="fas fa-building"></i>
-        Enterprise Solution
-    </div>
-    <h1>The AI Creation Platform<br>Built for <span>Business Scale</span></h1>
-    <p>Access world-class AI video, image, and music models via API or product. Power your eCommerce, film, and advertising workflows at scale.</p>
-    <div class="hero-btns">
-        <a href="#contact" class="btn-primary">Talk to Sales</a>
-        <a href="#access" class="btn-secondary">View API Docs</a>
-    </div>
-</div>
+    <main>
 
-<!-- STATS -->
-<div class="stats">
-    <div class="stats-inner">
-        <div>
-            <div class="stat-num">60+</div>
-            <div class="stat-label">Countries & Regions</div>
-        </div>
-        <div>
-            <div class="stat-num">10+</div>
-            <div class="stat-label">World-class AI Models</div>
-        </div>
-        <div>
-            <div class="stat-num">99.9%</div>
-            <div class="stat-label">API Uptime SLA</div>
-        </div>
-        <div>
-            <div class="stat-num">500+</div>
-            <div class="stat-label">Active Creators</div>
-        </div>
-    </div>
-</div>
-
-<!-- MODELS -->
-<section id="models">
-    <div class="section-inner">
-        <div class="section-tag">Model Matrix</div>
-        <div class="section-title">One API, All Leading Models</div>
-        <p class="section-desc">Stop integrating with 10 different providers. IMA Studio aggregates the best models in one unified API.</p>
-        <div class="models-grid">
-            <div class="model-card">
-                <div class="model-icon">🎬</div>
-                <div class="model-name">Civil 1.0</div>
-                <div class="model-tag">Video · NEW</div>
-                <div class="model-desc">IMA Studio's proprietary video model. Optimized for commercial content — eCommerce ads, short dramas, product demos.</div>
-            </div>
-            <div class="model-card">
-                <div class="model-icon">⚡</div>
-                <div class="model-name">Wan 2.6 / Kling</div>
-                <div class="model-tag">Video</div>
-                <div class="model-desc">Industry-leading text-to-video and image-to-video models. Exceptional motion quality for cinematic productions.</div>
-            </div>
-            <div class="model-card">
-                <div class="model-icon">🖼️</div>
-                <div class="model-name">SeeDream 4.5 / Midjourney</div>
-                <div class="model-tag">Image</div>
-                <div class="model-desc">High-fidelity image generation for product photography, advertising visuals, and creative design at scale.</div>
-            </div>
-            <div class="model-card">
-                <div class="model-icon">🎵</div>
-                <div class="model-name">Suno Sonic v5</div>
-                <div class="model-tag">Music</div>
-                <div class="model-desc">AI music generation with full lyrics and vocal control. Perfect for video background scores and brand soundtracks.</div>
-            </div>
-            <div class="model-card">
-                <div class="model-icon">🎭</div>
-                <div class="model-name">Google Veo 3.1 / Sora 2</div>
-                <div class="model-tag">Video · Premium</div>
-                <div class="model-desc">Hollywood-grade AI video from Google and OpenAI. For productions demanding the absolute highest quality.</div>
-            </div>
-            <div class="model-card">
-                <div class="model-icon">🤖</div>
-                <div class="model-name">AI Agent Workflow</div>
-                <div class="model-tag">Automation</div>
-                <div class="model-desc">Combine models in intelligent pipelines. Script → storyboard → video → music, all in one automated flow.</div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- USE CASES -->
-<section id="use-cases" class="cases">
-    <div class="section-inner">
-        <div class="section-tag">Use Cases</div>
-        <div class="section-title">Built for Your Industry</div>
-        <p class="section-desc">IMA Studio powers AI creation workflows across eCommerce, film production, and advertising.</p>
-        <div class="cases-grid">
-            <div class="case-card">
-                <div class="case-header">
-                    <div class="case-icon">🛍️</div>
-                    <div class="case-title">eCommerce & Advertising</div>
-                    <div class="case-desc">Turn product photos into compelling video ads in minutes. Scale creative production 10x without extra headcount.</div>
+        <!-- ===== Hero ===== -->
+        <section class="tob-hero">
+            <div class="tob-hero__bg" aria-hidden="true"></div>
+            <div class="tob-container">
+                <div class="tob-hero__badge">
+                    <span class="tob-hero__badge-dot" aria-hidden="true"></span>
+                    Ima Sevio 1.0 · 现已开放企业接入
                 </div>
-                <div class="case-features">
-                    <div class="case-feat"><i class="fas fa-check-circle"></i>Product image → video ad automation</div>
-                    <div class="case-feat"><i class="fas fa-check-circle"></i>Batch generation for SKU catalogues</div>
-                    <div class="case-feat"><i class="fas fa-check-circle"></i>Multi-platform format export (TikTok, Reels, YouTube)</div>
-                    <div class="case-feat"><i class="fas fa-check-circle"></i>Brand consistency via reference image</div>
+                <h1 class="tob-hero__title">
+                    影视级 AI 视频生成<br>
+                    <span>为商业内容而生</span>
+                </h1>
+                <p class="tob-hero__subtitle">
+                    Ima Studio 企业级 API，专为影视、电商、广告团队打造。<br>企业专属通道，无排队限制，按 Token 灵活计费。
+                </p>
+                <div class="tob-hero__actions">
+                    <a href="#contact" class="tob-btn tob-btn--primary">
+                        申请企业合作
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.imastudio.com" class="tob-btn tob-btn--outline" target="_blank" rel="noopener noreferrer">
+                        查看产品演示
+                    </a>
+                </div>
+                <div class="tob-hero__stats" role="list" aria-label="产品数据">
+                    <div class="tob-hero__stat" role="listitem">
+                        <div class="tob-hero__stat-value">480P~1080P</div>
+                        <div class="tob-hero__stat-label">多档画质输出</div>
+                    </div>
+                    <div class="tob-hero__stat" role="listitem">
+                        <div class="tob-hero__stat-value">1~3 工作日</div>
+                        <div class="tob-hero__stat-label">API 接入周期</div>
+                    </div>
+                    <div class="tob-hero__stat" role="listitem">
+                        <div class="tob-hero__stat-value">3 种套餐</div>
+                        <div class="tob-hero__stat-label">灵活满足不同规模</div>
+                    </div>
+                    <div class="tob-hero__stat" role="listitem">
+                        <div class="tob-hero__stat-value">专属通道</div>
+                        <div class="tob-hero__stat-label">无并发限制</div>
+                    </div>
                 </div>
             </div>
-            <div class="case-card">
-                <div class="case-header">
-                    <div class="case-icon">🎬</div>
-                    <div class="case-title">Film & Short Drama</div>
-                    <div class="case-desc">Accelerate pre-production and post-production with AI. Create storyboards, concept art, and video previsualization instantly.</div>
-                </div>
-                <div class="case-features">
-                    <div class="case-feat"><i class="fas fa-check-circle"></i>Script-to-storyboard pipeline</div>
-                    <div class="case-feat"><i class="fas fa-check-circle"></i>Character consistency across scenes</div>
-                    <div class="case-feat"><i class="fas fa-check-circle"></i>AI short drama production (Ima Drama)</div>
-                    <div class="case-feat"><i class="fas fa-check-circle"></i>Background music & sound design</div>
+        </section>
+
+        <!-- ===== Capabilities ===== -->
+        <section class="tob-section tob-section--alt" id="capabilities">
+            <div class="tob-container">
+                <header class="tob-section__header">
+                    <p class="tob-section__eyebrow">核心能力</p>
+                    <h2 class="tob-section__title">专为企业级内容生产打造</h2>
+                    <p class="tob-section__desc">影视级画质 × 商业化效率，满足从创意到批量交付的全链路需求。</p>
+                </header>
+                <div class="tob-caps">
+                    <article class="tob-cap-card">
+                        <div class="tob-cap-card__icon" aria-hidden="true">🎬</div>
+                        <h3 class="tob-cap-card__title">影视级画质</h3>
+                        <p class="tob-cap-card__desc">细腻光影还原、自然运动表现、电影感镜头语言，达到商业级影视制作标准。</p>
+                    </article>
+                    <article class="tob-cap-card">
+                        <div class="tob-cap-card__icon" aria-hidden="true">⚡</div>
+                        <h3 class="tob-cap-card__title">企业专属通道</h3>
+                        <p class="tob-cap-card__desc">独立生成队列，无排队等待，无并发上限，确保企业业务高效稳定运行。</p>
+                    </article>
+                    <article class="tob-cap-card">
+                        <div class="tob-cap-card__icon" aria-hidden="true">🎯</div>
+                        <h3 class="tob-cap-card__title">多模态输入</h3>
+                        <p class="tob-cap-card__desc">支持文生视频、图生视频、视频生视频三种模式，覆盖从创意到改编的完整工作流。</p>
+                    </article>
+                    <article class="tob-cap-card">
+                        <div class="tob-cap-card__icon" aria-hidden="true">📐</div>
+                        <h3 class="tob-cap-card__title">灵活分辨率</h3>
+                        <p class="tob-cap-card__desc">支持 480P / 720P / 1080P 高清输出，同一额度可混合使用，按实际需求灵活调配。</p>
+                    </article>
+                    <article class="tob-cap-card">
+                        <div class="tob-cap-card__icon" aria-hidden="true">✨</div>
+                        <h3 class="tob-cap-card__title">1080P AI 超分</h3>
+                        <p class="tob-cap-card__desc">基于 TOPAZ AI 超分技术，将 720P 视频无损升级至 1080P，细节增强，画面更清晰锐利。</p>
+                    </article>
+                    <article class="tob-cap-card">
+                        <div class="tob-cap-card__icon" aria-hidden="true">🔒</div>
+                        <h3 class="tob-cap-card__title">数据安全隔离</h3>
+                        <p class="tob-cap-card__desc">企业级数据隔离方案，生成内容不用于模型训练，保障商业内容的安全性与独占性。</p>
+                    </article>
                 </div>
             </div>
-            <div class="case-card">
-                <div class="case-header">
-                    <div class="case-icon">🏢</div>
-                    <div class="case-title">Creative Agencies</div>
-                    <div class="case-desc">Offer AI-powered creative services to your clients. Build custom workflows on top of IMA's API infrastructure.</div>
-                </div>
-                <div class="case-features">
-                    <div class="case-feat"><i class="fas fa-check-circle"></i>White-label API integration</div>
-                    <div class="case-feat"><i class="fas fa-check-circle"></i>Custom workflow automation</div>
-                    <div class="case-feat"><i class="fas fa-check-circle"></i>Reseller & partner program</div>
-                    <div class="case-feat"><i class="fas fa-check-circle"></i>Dedicated account support</div>
+        </section>
+
+        <!-- ===== Use Cases ===== -->
+        <section class="tob-section" id="usecases">
+            <div class="tob-container">
+                <header class="tob-section__header">
+                    <p class="tob-section__eyebrow">适用场景</p>
+                    <h2 class="tob-section__title">覆盖核心商业内容场景</h2>
+                    <p class="tob-section__desc">聚焦影视创作与电商两大核心领域，深度适配商业化需求。</p>
+                </header>
+                <div class="tob-cases">
+                    <article class="tob-case-card">
+                        <div class="tob-case-card__tag">影视创作</div>
+                        <h3 class="tob-case-card__title">影视预览 &amp; 概念验证</h3>
+                        <p class="tob-case-card__desc">快速将剧本概念转化为可视化视频，大幅降低传统影视前期制作成本，加速创作与决策流程。</p>
+                    </article>
+                    <article class="tob-case-card">
+                        <div class="tob-case-card__tag">影视创作</div>
+                        <h3 class="tob-case-card__title">AI 短剧内容生产</h3>
+                        <p class="tob-case-card__desc">批量生成短剧片段，支持多角色、多场景自动生成，满足短剧团队高频内容输出需求。</p>
+                    </article>
+                    <article class="tob-case-card">
+                        <div class="tob-case-card__tag">电商广告</div>
+                        <h3 class="tob-case-card__title">电商产品视频批量生成</h3>
+                        <p class="tob-case-card__desc">基于产品图片一键生成高质量展示视频，支持大批量 SKU 快速处理，提升电商转化效率。</p>
+                    </article>
+                    <article class="tob-case-card">
+                        <div class="tob-case-card__tag">电商广告</div>
+                        <h3 class="tob-case-card__title">品牌广告创意制作</h3>
+                        <p class="tob-case-card__desc">快速产出多版本广告创意视频，支持 A/B 测试素材批量生产，降低广告制作成本。</p>
+                    </article>
+                    <article class="tob-case-card">
+                        <div class="tob-case-card__tag">社媒内容</div>
+                        <h3 class="tob-case-card__title">短视频 &amp; 社交媒体内容</h3>
+                        <p class="tob-case-card__desc">持续输出高质量短视频内容，满足社交媒体账号运营的高频更新需求，降低内容生产门槛。</p>
+                    </article>
+                    <article class="tob-case-card">
+                        <div class="tob-case-card__tag">API 集成</div>
+                        <h3 class="tob-case-card__title">自研平台能力集成</h3>
+                        <p class="tob-case-card__desc">通过标准 API 将 AI 视频生成能力嵌入自研平台或工具链，打造差异化的产品竞争力。</p>
+                    </article>
                 </div>
             </div>
+        </section>
+
+        <!-- ===== Usage Methods ===== -->
+        <section class="tob-section tob-section--alt" id="usage">
+            <div class="tob-container">
+                <header class="tob-section__header">
+                    <p class="tob-section__eyebrow">接入方式</p>
+                    <h2 class="tob-section__title">两种使用方式，按需选择</h2>
+                    <p class="tob-section__desc">无论是技术团队接入还是直接上手使用，都有对应的最优路径。</p>
+                </header>
+                <div class="tob-usage">
+                    <article class="tob-usage-card tob-usage-card--featured">
+                        <div class="tob-usage-card__badge">推荐 · 开发者首选</div>
+                        <p class="tob-usage-card__num">方式 01</p>
+                        <h3 class="tob-usage-card__title">API 接入</h3>
+                        <p class="tob-usage-card__desc">通过标准 RESTful API 将 Ima Sevio 1.0 的视频生成能力接入您的业务系统，实现自动化批量生产。</p>
+                        <ul class="tob-usage-card__list">
+                            <li>完整 API 文档 + 示例代码</li>
+                            <li>专属技术对接群全程支持</li>
+                            <li>1~3 工作日完成接入</li>
+                            <li>支持批量任务与异步回调</li>
+                            <li>Token 余额实时查询接口</li>
+                        </ul>
+                    </article>
+                    <article class="tob-usage-card">
+                        <p class="tob-usage-card__num">方式 02</p>
+                        <h3 class="tob-usage-card__title">直接使用产品</h3>
+                        <p class="tob-usage-card__desc">无需开发，登录 Ima Studio 平台即可直接使用 AI 视频生成功能，零门槛上手。</p>
+                        <ul class="tob-usage-card__list">
+                            <li>可视化操作界面，无需编码</li>
+                            <li>文生视频、图生视频一键生成</li>
+                            <li>企业账户统一管理 Token</li>
+                            <li>支持团队多成员协作</li>
+                            <li>历史记录与素材管理</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Pricing ===== -->
+        <section class="tob-section" id="pricing">
+            <div class="tob-container">
+                <header class="tob-section__header">
+                    <p class="tob-section__eyebrow">套餐定价</p>
+                    <h2 class="tob-section__title">Token 预充值，按量扣减</h2>
+                    <p class="tob-section__desc">一次充值，灵活混用 480P / 720P / 1080P，实际生成才扣费，零浪费。</p>
+                </header>
+                <div class="tob-pricing" style="max-width:480px; margin-inline:auto;">
+                    <article class="tob-plan tob-plan--featured">
+                        <div class="tob-plan__popular" aria-label="企业套餐">企业套餐</div>
+                        <p class="tob-plan__name">企业版</p>
+                        <p class="tob-plan__target">适合影视、电商、广告内容团队</p>
+                        <div class="tob-plan__price">
+                            <span class="tob-plan__price-value">$3,000</span>
+                            <span class="tob-plan__price-cny">≈ ¥21,750</span>
+                        </div>
+                        <p class="tob-plan__tokens">Token 额度：约 3.64 亿 tokens｜Token 单价：¥0.0598/千tokens</p>
+                        <ul class="tob-plan__features">
+                            <li><span class="check" aria-hidden="true">✓</span> 480P 视频约 7,894 条（5秒）</li>
+                            <li><span class="check" aria-hidden="true">✓</span> 720P 视频约 3,529 条（5秒）</li>
+                            <li><span class="check" aria-hidden="true">✓</span> 1080P 视频约 3,000 条（5秒）</li>
+                            <li><span class="check" aria-hidden="true">✓</span> 480P / 720P / 1080P 灵活混用</li>
+                            <li><span class="check" aria-hidden="true">✓</span> 企业专属 API 通道</li>
+                            <li><span class="check" aria-hidden="true">✓</span> API 文档 + 专属技术对接群</li>
+                            <li><span class="check" aria-hidden="true">✓</span> 专属技术对接人全程协助</li>
+                        </ul>
+                        <a href="#contact" class="tob-btn tob-btn--primary tob-plan__cta">立即咨询</a>
+                    </article>
+                </div>
+                <p style="text-align:center; margin-top:24px; font-size:13px; color:var(--text-muted);">
+                    以上条数为单一分辨率满额使用的参考值。实际支持混合使用，同一额度可灵活组合不同分辨率视频。
+                </p>
+            </div>
+        </section>
+
+        <!-- ===== Advantages ===== -->
+        <section class="tob-section tob-section--alt" id="advantages">
+            <div class="tob-container">
+                <header class="tob-section__header">
+                    <p class="tob-section__eyebrow">服务优势</p>
+                    <h2 class="tob-section__title">为企业客户而设计</h2>
+                </header>
+                <div class="tob-advantages">
+                    <article class="tob-adv">
+                        <div class="tob-adv__icon" aria-hidden="true">🔑</div>
+                        <h3 class="tob-adv__title">按需扣减</h3>
+                        <p class="tob-adv__desc">按实际 Token 消耗计费，不生成不扣费，零浪费</p>
+                    </article>
+                    <article class="tob-adv">
+                        <div class="tob-adv__icon" aria-hidden="true">🔀</div>
+                        <h3 class="tob-adv__title">灵活混用</h3>
+                        <p class="tob-adv__desc">一笔充值覆盖三档分辨率，按需选择组合</p>
+                    </article>
+                    <article class="tob-adv">
+                        <div class="tob-adv__icon" aria-hidden="true">⚡</div>
+                        <h3 class="tob-adv__title">即时响应</h3>
+                        <p class="tob-adv__desc">企业专属 API 通道，无排队等待，实时生成</p>
+                    </article>
+                    <article class="tob-adv">
+                        <div class="tob-adv__icon" aria-hidden="true">📊</div>
+                        <h3 class="tob-adv__title">用量透明</h3>
+                        <p class="tob-adv__desc">后台实时查看 Token 余额与消耗明细</p>
+                    </article>
+                    <article class="tob-adv">
+                        <div class="tob-adv__icon" aria-hidden="true">🔒</div>
+                        <h3 class="tob-adv__title">数据安全</h3>
+                        <p class="tob-adv__desc">企业级数据隔离，内容不用于模型训练</p>
+                    </article>
+                    <article class="tob-adv">
+                        <div class="tob-adv__icon" aria-hidden="true">🤝</div>
+                        <h3 class="tob-adv__title">专属支持</h3>
+                        <p class="tob-adv__desc">配备专属技术对接人，API 集成全程协助</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Process ===== -->
+        <section class="tob-section" id="process">
+            <div class="tob-container">
+                <header class="tob-section__header">
+                    <p class="tob-section__eyebrow">合作流程</p>
+                    <h2 class="tob-section__title">最快 1 天，即可开始生成</h2>
+                    <p class="tob-section__desc">极简对接流程，合同签署后 1~3 个工作日内完成 API 接入。</p>
+                </header>
+                <div class="tob-process" role="list" aria-label="合作步骤">
+                    <div class="tob-step" role="listitem">
+                        <div class="tob-step__num" aria-label="第一步">1</div>
+                        <p class="tob-step__title">选择套餐</p>
+                        <p class="tob-step__desc">根据团队规模选择适合的套餐方案</p>
+                    </div>
+                    <div class="tob-step" role="listitem">
+                        <div class="tob-step__num" aria-label="第二步">2</div>
+                        <p class="tob-step__title">签署合同</p>
+                        <p class="tob-step__desc">签署企业服务协议，明确服务条款</p>
+                    </div>
+                    <div class="tob-step" role="listitem">
+                        <div class="tob-step__num" aria-label="第三步">3</div>
+                        <p class="tob-step__title">充值到账</p>
+                        <p class="tob-step__desc">完成 Token 充值，额度即时到账</p>
+                    </div>
+                    <div class="tob-step" role="listitem">
+                        <div class="tob-step__num" aria-label="第四步">4</div>
+                        <p class="tob-step__title">获取 API 密钥</p>
+                        <p class="tob-step__desc">收到专属 API Key 及完整接入文档</p>
+                    </div>
+                    <div class="tob-step" role="listitem">
+                        <div class="tob-step__num" aria-label="第五步">5</div>
+                        <p class="tob-step__title">开始生成</p>
+                        <p class="tob-step__desc">接入完成，开始批量生产 AI 视频</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Contact ===== -->
+        <section class="tob-section" id="contact">
+            <div class="tob-container">
+                <div class="tob-contact">
+                    <h2 class="tob-contact__title">准备好了吗？</h2>
+                    <p class="tob-contact__desc">
+                        联系 Ima Studio 企业服务团队，了解更多方案详情或申请免费试用。<br>
+                        我们将在 1 个工作日内回复您。
+                    </p>
+                    <div class="tob-contact__links">
+                        <a href="mailto:business@imastudio.com" class="tob-contact__link">
+                            <span aria-hidden="true">📧</span>
+                            business@imastudio.com
+                        </a>
+                        <a href="https://www.imastudio.com" class="tob-contact__link" target="_blank" rel="noopener noreferrer">
+                            <span aria-hidden="true">🌐</span>
+                            www.imastudio.com
+                        </a>
+                    </div>
+                    <p style="font-size:13px; color:var(--text-muted); margin-top:16px;">
+                        Ima Studio — See what video becomes.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="tob-footer">
+        <div class="tob-container">
+            <p class="tob-footer__text">
+                © 2026 <a href="https://www.imastudio.com" target="_blank" rel="noopener noreferrer">Ima Studio</a>. All rights reserved.
+            </p>
         </div>
-    </div>
-</section>
+    </footer>
 
-<!-- ACCESS -->
-<section id="access">
-    <div class="section-inner">
-        <div class="section-tag">Integration</div>
-        <div class="section-title">Two Ways to Get Started</div>
-        <p class="section-desc">Choose the integration method that fits your team — direct product use or full API control.</p>
-        <div class="access-grid">
-            <div class="access-card">
-                <div class="access-label">Option 1</div>
-                <div class="access-title">Use the Product</div>
-                <div class="access-desc">Access all models directly through IMA Studio's web app and IM bot. No engineering required.</div>
-                <ul class="access-list">
-                    <li><i class="fas fa-check"></i>Instant access, no setup needed</li>
-                    <li><i class="fas fa-check"></i>AI Agent in your IM (Feishu, WhatsApp, Discord, Telegram)</li>
-                    <li><i class="fas fa-check"></i>Team workspace & credits management</li>
-                    <li><i class="fas fa-check"></i>Community skill marketplace</li>
-                </ul>
-                <a href="https://www.imastudio.com" target="_blank" class="btn-primary" style="display:inline-block;text-align:center;">Try IMA Studio →</a>
-            </div>
-            <div class="access-card featured">
-                <div class="access-label">Option 2</div>
-                <div class="access-title">API Integration</div>
-                <div class="access-desc">Integrate IMA models directly into your product or workflow via REST API.</div>
-                <ul class="access-list">
-                    <li><i class="fas fa-check"></i>Unified API for all models</li>
-                    <li><i class="fas fa-check"></i>Pay-per-use pricing, no seat fees</li>
-                    <li><i class="fas fa-check"></i>Async task queue with webhook callbacks</li>
-                    <li><i class="fas fa-check"></i>99.9% uptime SLA + priority support</li>
-                </ul>
-                <div class="code-block">
-POST /api/v1/tasks/create<br>
-{<br>
-&nbsp;&nbsp;"model": "civil-1.0",<br>
-&nbsp;&nbsp;"type": "image_to_video",<br>
-&nbsp;&nbsp;"input": { "image_url": "...", "prompt": "..." }<br>
-}
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<script>
+/* tob.js — ToB landing page interactions */
+;(function () {
+    'use strict'
 
-<!-- PRICING -->
-<section id="pricing" class="pricing">
-    <div class="section-inner">
-        <div class="section-tag">Pricing</div>
-        <div class="section-title">Simple, Usage-Based Pricing</div>
-        <p class="section-desc">Pay only for what you generate. No monthly minimums. Volume discounts available for enterprise.</p>
-        <div class="pricing-grid">
-            <div class="price-card">
-                <div class="price-model">🎬 Video Generation</div>
-                <div class="price-amount">From $0.03</div>
-                <div class="price-unit">per second of video</div>
-                <div class="price-note">Wan 2.6, Kling, Civil 1.0</div>
-            </div>
-            <div class="price-card">
-                <div class="price-model">🖼️ Image Generation</div>
-                <div class="price-amount">From $0.02</div>
-                <div class="price-unit">per image</div>
-                <div class="price-note">SeeDream 4.5, Midjourney</div>
-            </div>
-            <div class="price-card">
-                <div class="price-model">🎵 Music Generation</div>
-                <div class="price-amount">From $0.05</div>
-                <div class="price-unit">per track</div>
-                <div class="price-note">Suno Sonic v5, DouBao</div>
-            </div>
-            <div class="price-card">
-                <div class="price-model">🏢 Enterprise</div>
-                <div class="price-amount">Custom</div>
-                <div class="price-unit">volume pricing</div>
-                <div class="price-note">Dedicated support + SLA</div>
-            </div>
-        </div>
-        <p style="text-align:center; color: var(--text2); font-size:13px; margin-top:24px;">
-            <i class="fas fa-info-circle"></i> &nbsp;Enterprise customers enjoy up to 40% volume discount. Contact sales for a custom quote.
-        </p>
-    </div>
-</section>
+    /* ===== Smooth scroll for anchor links ===== */
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            var target = document.querySelector(this.getAttribute('href'))
+            if (!target) return
+            e.preventDefault()
+            var offset = 72 // nav height
+            var top = target.getBoundingClientRect().top + window.scrollY - offset
+            window.scrollTo({ top: top, behavior: 'smooth' })
+        })
+    })
 
-<!-- CONTACT -->
-<section id="contact">
-    <div class="section-inner">
-        <div class="contact-box">
-            <h2>Ready to Scale with AI?</h2>
-            <p>Talk to our team about your use case. We'll help you find the right integration and pricing for your business.</p>
-            <div class="contact-methods">
-                <a href="mailto:business@imastudio.com" class="contact-btn email">
-                    <i class="fas fa-envelope"></i>
-                    business@imastudio.com
-                </a>
-                <a href="https://www.imastudio.com" target="_blank" class="contact-btn website">
-                    <i class="fas fa-globe"></i>
-                    Visit IMA Studio
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
+    /* ===== Nav scroll shadow ===== */
+    var nav = document.querySelector('.tob-nav')
+    if (nav) {
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 10) {
+                nav.style.boxShadow = '0 4px 24px rgba(0,0,0,0.3)'
+            } else {
+                nav.style.boxShadow = ''
+            }
+        }, { passive: true })
+    }
 
-<!-- FOOTER -->
-<footer>
-    <p>© 2026 IMA Studio · <a href="https://www.imastudio.com" style="color:var(--text2);">imastudio.com</a> · All rights reserved.</p>
-</footer>
+    /* ===== Mobile nav toggle ===== */
+    var toggle = document.querySelector('.tob-nav__mobile-toggle')
+    var navLinks = document.querySelector('.tob-nav__links')
+    if (toggle && navLinks) {
+        toggle.addEventListener('click', function () {
+            var expanded = this.getAttribute('aria-expanded') === 'true'
+            this.setAttribute('aria-expanded', String(!expanded))
+            if (!expanded) {
+                navLinks.style.display = 'flex'
+                navLinks.style.flexDirection = 'column'
+                navLinks.style.position = 'absolute'
+                navLinks.style.top = '64px'
+                navLinks.style.left = '0'
+                navLinks.style.right = '0'
+                navLinks.style.background = 'rgba(10,12,20,0.97)'
+                navLinks.style.padding = '16px 24px 24px'
+                navLinks.style.borderBottom = '1px solid rgba(255,255,255,0.08)'
+                navLinks.style.gap = '16px'
+            } else {
+                navLinks.style.display = ''
+                navLinks.style.position = ''
+                navLinks.style.top = ''
+                navLinks.style.left = ''
+                navLinks.style.right = ''
+                navLinks.style.background = ''
+                navLinks.style.padding = ''
+                navLinks.style.borderBottom = ''
+                navLinks.style.flexDirection = ''
+                navLinks.style.gap = ''
+            }
+        })
 
+        // close on link click (mobile)
+        navLinks.querySelectorAll('a').forEach(function (a) {
+            a.addEventListener('click', function () {
+                toggle.setAttribute('aria-expanded', 'false')
+                navLinks.style.display = ''
+                navLinks.style.position = ''
+                navLinks.style.top = ''
+                navLinks.style.left = ''
+                navLinks.style.right = ''
+                navLinks.style.background = ''
+                navLinks.style.padding = ''
+                navLinks.style.borderBottom = ''
+                navLinks.style.flexDirection = ''
+                navLinks.style.gap = ''
+            })
+        })
+    }
+
+    /* ===== Intersection Observer: fade-in on scroll ===== */
+    if ('IntersectionObserver' in window) {
+        var style = document.createElement('style')
+        style.textContent = [
+            '.tob-reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }',
+            '.tob-reveal.is-visible { opacity: 1; transform: translateY(0); }'
+        ].join('')
+        document.head.appendChild(style)
+
+        var revealEls = document.querySelectorAll(
+            '.tob-cap-card, .tob-case-card, .tob-usage-card, .tob-plan, .tob-adv, .tob-step'
+        )
+
+        revealEls.forEach(function (el, i) {
+            el.classList.add('tob-reveal')
+            el.style.transitionDelay = (i % 4) * 80 + 'ms'
+        })
+
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible')
+                    observer.unobserve(entry.target)
+                }
+            })
+        }, { threshold: 0.12 })
+
+        revealEls.forEach(function (el) { observer.observe(el) })
+    }
+
+})()
+</script>
 </body>
 </html>
