@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IMA — Your AI Creative Partner</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0f;
+  --surface:#13131a;
+  --surface2:#1c1c26;
+  --border:#2a2a3a;
+  --accent:#7c6aff;
+  --accent2:#ff6ab0;
+  --gold:#f5c842;
+  --text:#e8e8f0;
+  --text2:#8888aa;
+  --radius:16px;
+}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+
+/* TOP NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px}
+.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.nav-right{display:flex;align-items:center;gap:12px}
+.badge-free{background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-size:12px;padding:4px 10px;border-radius:20px}
+.btn-upgrade{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:8px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .2s}
+.btn-upgrade:hover{opacity:.85}
+.credits{font-size:12px;color:var(--gold);display:flex;align-items:center;gap:4px}
+
+/* MAIN LAYOUT */
+.main{display:flex;flex:1;min-height:0}
+
+/* SIDEBAR */
+.sidebar{width:220px;background:var(--surface);border-right:1px solid var(--border);padding:16px 12px;display:flex;flex-direction:column;gap:4px;flex-shrink:0}
+.sidebar-title{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;padding:8px 8px 4px;font-weight:600}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;cursor:pointer;font-size:14px;color:var(--text2);transition:all .15s}
+.sidebar-item:hover{background:var(--surface2);color:var(--text)}
+.sidebar-item.active{background:rgba(124,106,255,.15);color:var(--accent)}
+.sidebar-item .icon{font-size:16px;width:20px;text-align:center}
+
+/* CHAT AREA */
+.chat-area{flex:1;display:flex;flex-direction:column;min-height:0}
+.chat-messages{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:20px}
+.chat-messages::-webkit-scrollbar{width:4px}
+.chat-messages::-webkit-scrollbar-track{background:transparent}
+.chat-messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+/* WELCOME */
+.welcome{text-align:center;padding:40px 20px;max-width:560px;margin:0 auto}
+.welcome-icon{font-size:56px;margin-bottom:16px}
+.welcome h1{font-size:28px;font-weight:700;margin-bottom:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.welcome p{color:var(--text2);font-size:15px;line-height:1.6;margin-bottom:28px}
+.quick-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.qa-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:10px 16px;border-radius:12px;font-size:13px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px}
+.qa-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(124,106,255,.08)}
+
+/* MESSAGES */
+.msg{display:flex;gap:12px;max-width:800px}
+.msg.user{flex-direction:row-reverse;margin-left:auto}
+.msg-avatar{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px}
+.msg.agent .msg-avatar{background:linear-gradient(135deg,var(--accent),var(--accent2))}
+.msg.user .msg-avatar{background:var(--surface2);border:1px solid var(--border)}
+.msg-bubble{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;font-size:14px;line-height:1.6;max-width:560px}
+.msg.user .msg-bubble{background:rgba(124,106,255,.12);border-color:rgba(124,106,255,.3)}
+.msg-bubble img{width:100%;border-radius:10px;margin-top:10px}
+
+/* RESULT CARD */
+.result-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px;margin-top:10px}
+.result-img{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#1a1a2e,#2d1b69);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:48px;margin-bottom:12px}
+.result-meta{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--text2)}
+.result-actions{display:flex;gap:8px;margin-top:10px}
+.btn-sm{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .2s}
+.btn-download{background:var(--surface);border:1px solid var(--border);color:var(--text2)}
+.btn-download:hover{border-color:var(--accent);color:var(--accent)}
+.btn-hd{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+
+/* UPSELL INLINE */
+.upsell-inline{background:linear-gradient(135deg,rgba(124,106,255,.12),rgba(255,106,176,.08));border:1px solid rgba(124,106,255,.3);border-radius:12px;padding:14px 16px;margin-top:10px;display:flex;align-items:center;gap:14px}
+.upsell-inline .upsell-icon{font-size:28px;flex-shrink:0}
+.upsell-text{flex:1}
+.upsell-text strong{display:block;font-size:14px;margin-bottom:3px}
+.upsell-text span{font-size:12px;color:var(--text2)}
+.btn-upsell{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:8px 16px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0}
+
+/* CREDITS WARNING */
+.credits-warning{background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.3);border-radius:12px;padding:12px 16px;margin-top:10px;font-size:13px;color:var(--gold);display:flex;align-items:center;gap:10px}
+
+/* INPUT */
+.chat-input-area{padding:16px 24px 20px;border-top:1px solid var(--border);background:var(--bg);flex-shrink:0}
+.input-wrap{background:var(--surface);border:1px solid var(--border);border-radius:16px;display:flex;align-items:flex-end;gap:10px;padding:12px 16px;transition:border-color .2s}
+.input-wrap:focus-within{border-color:var(--accent)}
+.input-wrap textarea{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-size:14px;resize:none;max-height:120px;line-height:1.5;font-family:inherit}
+.input-wrap textarea::placeholder{color:var(--text2)}
+.input-tools{display:flex;align-items:center;gap:8px}
+.tool-btn{background:transparent;border:none;color:var(--text2);cursor:pointer;padding:6px;border-radius:8px;font-size:16px;transition:color .15s}
+.tool-btn:hover{color:var(--text)}
+.send-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#fff;width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:opacity .2s;flex-shrink:0}
+.send-btn:hover{opacity:.85}
+.input-hints{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.hint-tag{background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-size:11px;padding:4px 10px;border-radius:6px;cursor:pointer;transition:all .15s}
+.hint-tag:hover{border-color:var(--accent);color:var(--accent)}
+
+/* UPGRADE MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:100;display:none}
+.modal-overlay.show{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:32px;max-width:480px;width:90%;position:relative}
+.modal h2{font-size:22px;font-weight:700;margin-bottom:6px}
+.modal .sub{color:var(--text2);font-size:14px;margin-bottom:24px}
+.plans{display:flex;flex-direction:column;gap:12px;margin-bottom:24px}
+.plan{border:1px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;transition:all .2s;position:relative}
+.plan:hover{border-color:var(--accent)}
+.plan.popular{border-color:var(--accent);background:rgba(124,106,255,.06)}
+.plan-badge{position:absolute;top:-10px;left:16px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
+.plan-name{font-weight:700;font-size:15px;margin-bottom:3px}
+.plan-price{font-size:22px;font-weight:800;color:var(--accent)}
+.plan-price span{font-size:13px;font-weight:400;color:var(--text2)}
+.plan-perks{margin-top:8px;font-size:12px;color:var(--text2);line-height:1.8}
+.modal-close{position:absolute;top:16px;right:16px;background:transparent;border:none;color:var(--text2);font-size:20px;cursor:pointer}
+.btn-start{width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer}
+
+/* TYPING INDICATOR */
+.typing{display:flex;gap:5px;align-items:center;padding:6px 0}
+.typing span{width:7px;height:7px;background:var(--text2);border-radius:50%;animation:bounce .8s infinite}
+.typing span:nth-child(2){animation-delay:.15s}
+.typing span:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+
+/* SCROLLBAR */
+html{scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="logo-icon">✦</div>
+    IMA Studio
+  </div>
+  <div class="nav-right">
+    <div class="credits">⚡ 18 credits left</div>
+    <div class="badge-free">Free Plan</div>
+    <button class="btn-upgrade" onclick="showModal()">🦞 Upgrade</button>
+  </div>
+</nav>
+
+<div class="main">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-title">Create</div>
+    <div class="sidebar-item active"><span class="icon">🤖</span> Agent</div>
+    <div class="sidebar-item"><span class="icon">🎨</span> Image</div>
+    <div class="sidebar-item"><span class="icon">🎬</span> Video</div>
+    <div class="sidebar-item"><span class="icon">🎵</span> Music</div>
+    <div class="sidebar-item"><span class="icon">🎭</span> Drama</div>
+    <div class="sidebar-title" style="margin-top:8px">Explore</div>
+    <div class="sidebar-item"><span class="icon">🌐</span> Community</div>
+    <div class="sidebar-item"><span class="icon">⭐</span> My Works</div>
+    <div class="sidebar-item"><span class="icon">🔧</span> Skills</div>
+    <div style="flex:1"></div>
+    <div class="sidebar-item" onclick="showModal()" style="background:rgba(124,106,255,.1);color:var(--accent)">
+      <span class="icon">🦞</span> Go Pro
+    </div>
+  </div>
+
+  <!-- CHAT -->
+  <div class="chat-area">
+    <div class="chat-messages" id="messages">
+
+      <!-- WELCOME STATE -->
+      <div class="welcome" id="welcome">
+        <div class="welcome-icon">✦</div>
+        <h1>Hi, I'm IMA 👋</h1>
+        <p>Your AI creative partner. Tell me what you want to create — images, videos, music, or anything else. I'll make it happen.</p>
+        <div class="quick-actions">
+          <button class="qa-btn" onclick="sendQuick('Generate a product photo for a skincare brand')">🎨 Product photo</button>
+          <button class="qa-btn" onclick="sendQuick('Create a short video of a sunset over the ocean')">🎬 Video clip</button>
+          <button class="qa-btn" onclick="sendQuick('Make background music for a travel vlog')">🎵 Background music</button>
+          <button class="qa-btn" onclick="sendQuick('Design a logo for a tech startup')">✨ Logo design</button>
+          <button class="qa-btn" onclick="sendQuick('Turn my photo into anime style')">🖼️ Style transfer</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- INPUT -->
+    <div class="chat-input-area">
+      <div class="input-wrap">
+        <textarea id="userInput" rows="1" placeholder="Tell me what you want to create..." 
+          onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+        <div class="input-tools">
+          <button class="tool-btn" title="Attach image">📎</button>
+          <button class="tool-btn" title="Voice input">🎤</button>
+        </div>
+        <button class="send-btn" onclick="sendMessage()">➤</button>
+      </div>
+      <div class="input-hints">
+        <span class="hint-tag" onclick="setInput('a cinematic photo of Tokyo at night, 4K')">📸 Cinematic photo</span>
+        <span class="hint-tag" onclick="setInput('anime style portrait of a girl with flowers')">🌸 Anime portrait</span>
+        <span class="hint-tag" onclick="setInput('logo for a coffee shop, minimalist')">☕ Logo</span>
+        <span class="hint-tag" onclick="setInput('short video: waves crashing on beach')">🌊 Ocean video</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UPGRADE MODAL -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)hideModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="hideModal()">✕</button>
+    <h2>🦞 Upgrade to Pro</h2>
+    <p class="sub">Unlock unlimited creation with higher quality and more credits.</p>
+    <div class="plans">
+      <div class="plan" onclick="selectPlan(this)">
+        <div class="plan-name">Plus</div>
+        <div class="plan-price">$9.99 <span>/month</span></div>
+        <div class="plan-perks">✓ 500 credits/month &nbsp;·&nbsp; ✓ 1K resolution &nbsp;·&nbsp; ✓ No watermark</div>
+      </div>
+      <div class="plan popular" onclick="selectPlan(this)">
+        <div class="plan-badge">MOST POPULAR</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">$39.99 <span>/month</span></div>
+        <div class="plan-perks">✓ 2000 credits/month &nbsp;·&nbsp; ✓ 4K resolution &nbsp;·&nbsp; ✓ Priority queue &nbsp;·&nbsp; ✓ All models</div>
+      </div>
+      <div class="plan" onclick="selectPlan(this)">
+        <div class="plan-name">Ultra</div>
+        <div class="plan-price">$99.99 <span>/month</span></div>
+        <div class="plan-perks">✓ Unlimited credits &nbsp;·&nbsp; ✓ API access &nbsp;·&nbsp; ✓ Team workspace &nbsp;·&nbsp; ✓ Custom models</div>
+      </div>
+    </div>
+    <button class="btn-start">Start Free Trial — 7 days free ✦</button>
+  </div>
+</div>
+
+<script>
+let msgCount = 0;
+let credits = 18;
+
+function autoResize(el){
+  el.style.height='auto';
+  el.style.height=Math.min(el.scrollHeight,120)+'px';
+}
+
+function handleKey(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage()}
+}
+
+function setInput(text){
+  const ta=document.getElementById('userInput');
+  ta.value=text;ta.focus();autoResize(ta);
+}
+
+function sendQuick(text){
+  document.getElementById('welcome').style.display='none';
+  addUserMsg(text);
+  simulateResponse(text);
+}
+
+function sendMessage(){
+  const ta=document.getElementById('userInput');
+  const text=ta.value.trim();
+  if(!text)return;
+  document.getElementById('welcome').style.display='none';
+  ta.value='';autoResize(ta);
+  addUserMsg(text);
+  simulateResponse(text);
+}
+
+function addUserMsg(text){
+  const msgs=document.getElementById('messages');
+  msgs.innerHTML+=`
+  <div class="msg user">
+    <div class="msg-avatar">😊</div>
+    <div class="msg-bubble">${text}</div>
+  </div>`;
+  scrollBottom();
+}
+
+function simulateResponse(text){
+  const msgs=document.getElementById('messages');
+  const typingId='typing-'+Date.now();
+  msgs.innerHTML+=`
+  <div class="msg agent" id="${typingId}">
+    <div class="msg-avatar">✦</div>
+    <div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div>
+  </div>`;
+  scrollBottom();
+
+  setTimeout(()=>{
+    document.getElementById(typingId)?.remove();
+    credits = Math.max(0, credits - 2);
+    document.querySelector('.credits').textContent = `⚡ ${credits} credits left`;
+
+    if(credits <= 4){
+      addAgentMsg(text, true);
+    } else {
+      addAgentMsg(text, false);
+    }
+  }, 1800);
+}
+
+function addAgentMsg(userText, lowCredits){
+  const msgs=document.getElementById('messages');
+  msgCount++;
+
+  let responseHTML = getResponseHTML(userText);
+  
+  let upsellHTML = '';
+  if(msgCount === 2){
+    upsellHTML = `
+    <div class="upsell-inline">
+      <div class="upsell-icon">✨</div>
+      <div class="upsell-text">
+        <strong>This was 512px preview. Want 4K without watermark?</strong>
+        <span>Plus members get full resolution + 500 credits/month</span>
+      </div>
+      <button class="btn-upsell" onclick="showModal()">Try Plus — $9.99</button>
+    </div>`;
+  } else if(msgCount === 3){
+    upsellHTML = `
+    <div class="upsell-inline">
+      <div class="upsell-icon">🚀</div>
+      <div class="upsell-text">
+        <strong>You're creating a lot! Pro members get 2000 credits + 4K.</strong>
+        <span>First 7 days free — cancel anytime</span>
+      </div>
+      <button class="btn-upsell" onclick="showModal()">Start Free Trial</button>
+    </div>`;
+  }
+
+  if(lowCredits){
+    upsellHTML = `
+    <div class="credits-warning">
+      ⚡ Only ${credits} credits left. <strong style="margin-left:4px;cursor:pointer;text-decoration:underline" onclick="showModal()">Top up or upgrade →</strong>
+    </div>`;
+  }
+
+  msgs.innerHTML+=`
+  <div class="msg agent">
+    <div class="msg-avatar">✦</div>
+    <div class="msg-bubble">
+      ${responseHTML}
+      ${upsellHTML}
+    </div>
+  </div>`;
+  scrollBottom();
+}
+
+function getResponseHTML(text){
+  const t = text.toLowerCase();
+  if(t.includes('video')||t.includes('clip')){
+    return `<div>Sure! Here's your video preview 🎬</div>
+    <div class="result-card">
+      <div class="result-img">🎬</div>
+      <div class="result-meta"><span>5s · 720p · Wan 2.6</span><span>8 credits used</span></div>
+      <div class="result-actions">
+        <button class="btn-sm btn-download">⬇ Download (watermark)</button>
+        <button class="btn-sm btn-hd" onclick="showModal()">🦞 Get 4K — Upgrade</button>
+      </div>
+    </div>`;
+  } else if(t.includes('music')||t.includes('audio')||t.includes('song')){
+    return `<div>Here's your music track 🎵</div>
+    <div class="result-card">
+      <div class="result-img" style="aspect-ratio:3/1;font-size:32px">🎵 ▶ ━━━━━━━━━━━━ 0:30</div>
+      <div class="result-meta"><span>30s · MP3 · Suno v5</span><span>5 credits used</span></div>
+      <div class="result-actions">
+        <button class="btn-sm btn-download">⬇ Download preview</button>
+        <button class="btn-sm btn-hd" onclick="showModal()">🦞 Full track — Upgrade</button>
+      </div>
+    </div>`;
+  } else {
+    return `<div>Here's your image ✨ (512px preview)</div>
+    <div class="result-card">
+      <div class="result-img">🎨</div>
+      <div class="result-meta"><span>512px · SeeDream 4.5</span><span>5 credits used</span></div>
+      <div class="result-actions">
+        <button class="btn-sm btn-download">⬇ Download (watermark)</button>
+        <button class="btn-sm btn-hd" onclick="showModal()">🦞 Get 4K — Upgrade</button>
+      </div>
+    </div>`;
+  }
+}
+
+function scrollBottom(){
+  const msgs=document.getElementById('messages');
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function showModal(){document.getElementById('modal').classList.add('show')}
+function hideModal(){document.getElementById('modal').classList.remove('show')}
+function selectPlan(el){
+  document.querySelectorAll('.plan').forEach(p=>p.style.borderColor='');
+  el.style.borderColor='var(--accent)';
+}
+</script>
+</body>
+</html>
